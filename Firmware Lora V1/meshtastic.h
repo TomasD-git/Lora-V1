@@ -109,7 +109,7 @@ inline bool meshDecodePacket(const uint8_t* buf, size_t len,
 
   for (size_t i = 0; i < payloadLen; i++) {
     if (payload[i] != 0 && (payload[i] < 0x20 || payload[i] > 0x7E)) {
-      return false; // Likely wrong key or corrupted
+      return false; 
     }
   }
 
