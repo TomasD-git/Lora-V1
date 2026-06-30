@@ -34,7 +34,7 @@ struct MeshPacketHeader {
 struct MeshMessage {
   uint32_t from;
   uint32_t id;
-  uint32_t timestamp;   // Unix epoch from RTC
+  uint32_t timestamp;  
   char     sender[MAX_CALLSIGN_LEN + 1];
   char     text[MAX_MSG_LEN + 1];
   bool     outgoing;
@@ -51,13 +51,12 @@ inline int meshEncodeText(uint8_t* buf, size_t bufLen,
   size_t total = HEADER_SIZE + textLen;
   if (total > bufLen) return -1;
 
-  // Fill header (big-endian on-wire)
   MeshPacketHeader* hdr = (MeshPacketHeader*)buf;
   hdr->to         = __builtin_bswap32(toId);
   hdr->from       = __builtin_bswap32(fromId);
   hdr->id         = __builtin_bswap32(packetId);
-  hdr->flags      = 0x03;        // hop_limit=3
-  hdr->channel_id = 0x08;        // LongFast channel hash
+  hdr->flags      = 0x03;        
+  hdr->channel_id = 0x08;       
   hdr->portnum    = PORTNUM_TEXT;
   hdr->reserved   = 0x00;
 
